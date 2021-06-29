@@ -1,6 +1,5 @@
-const div = document.createElement('div');
-div.innerHTML = '<custom-style><style include="lumo-color lumo-typography"></style></custom-style>';
-document.head.insertBefore(div.firstElementChild, document.head.firstChild);
+import {applyTheme} from 'themes/theme-generated.js';
+applyTheme(document);
 
 import '@polymer/iron-icon/iron-icon.js';
 import '@polymer/iron-list/iron-list.js';
@@ -87,3 +86,4 @@ import '@vaadin/flow-frontend/dndConnector.js';
 import '@vaadin/flow-frontend/gridConnector.js';
 import '@vaadin/flow-frontend/ironListConnector.js';
 import '@vaadin/flow-frontend/selectConnector.js';
+import './themes/theme-generated.js';

@@ -1,18 +1,16 @@
 package com.example.application.data.generator;
 
-import com.vaadin.flow.spring.annotation.SpringComponent;
-
-import com.example.application.data.service.PersonRepository;
 import com.example.application.data.entity.Person;
-
-import java.time.LocalDateTime;
-
+import com.example.application.data.service.PersonRepository;
+import com.vaadin.flow.spring.annotation.SpringComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.vaadin.artur.exampledata.DataType;
 import org.vaadin.artur.exampledata.ExampleDataGenerator;
+
+import java.time.LocalDateTime;
 
 @SpringComponent
 public class DataGenerator {
@@ -35,11 +33,10 @@ public class DataGenerator {
             personRepositoryGenerator.setData(Person::setId, DataType.ID);
             personRepositoryGenerator.setData(Person::setSurname, DataType.LAST_NAME);
             personRepositoryGenerator.setData(Person::setName, DataType.FIRST_NAME);
-            personRepositoryGenerator.setData(Person::setPatronymic, DataType.WORD);
+            personRepositoryGenerator.setData(Person::setPatronymic, DataType.FULL_NAME);
             personRepositoryGenerator.setData(Person::setPhone, DataType.PHONE_NUMBER);
             personRepositoryGenerator.setData(Person::setEmail, DataType.EMAIL);
-            personRepositoryGenerator.setData(Person::setDate, DataType.DATE_NEXT_10_YEARS);
-            personRepositoryGenerator.setData(Person::setPassportID, DataType.NUMBER_UP_TO_1000);
+            personRepositoryGenerator.setData(Person::setPassportID, DataType.NUMBER_UP_TO_10000);
             personRepository.saveAll(personRepositoryGenerator.create(100, seed));
 
             logger.info("Generated demo data");

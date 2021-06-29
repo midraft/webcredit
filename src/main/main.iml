@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/java" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-app-layout-flow:14.6.1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:flow-server:2.6.1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-avatar-flow:14.6.1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:flow-html-components:2.6.1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-ordered-layout-flow:14.6.1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-tabs-flow:14.6.1" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-autoconfigure:2.4.5" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:2.4.5" level="project" />
+    <orderEntry type="library" name="Maven: org.vaadin.artur:a-vaadin-helper:1.6.2" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-grid-flow:14.6.1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-button-flow:14.6.1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-text-field-flow:14.6.1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-date-picker-flow:14.6.1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:flow-data:2.6.1" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-beans:5.3.6" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-split-layout-flow:14.6.1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-notification-flow:14.6.1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-form-layout-flow:14.6.1" level="project" />
+    <orderEntry type="library" name="Maven: jakarta.persistence:jakarta.persistence-api:2.2.3" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-spring:12.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-context:5.3.6" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.30" level="project" />
+    <orderEntry type="library" name="Maven: org.vaadin.artur.exampledata:exampledata:3.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.data:spring-data-jpa:2.4.8" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-combo-box-flow:14.6.1" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-custom-field-flow:14.6.1" level="project" />
+  </component>
+</module>

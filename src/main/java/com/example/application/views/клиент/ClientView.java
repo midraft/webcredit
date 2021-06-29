@@ -8,7 +8,6 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.customfield.CustomField;
-import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
@@ -30,7 +29,6 @@ public class ClientView extends Div {
     private TextField name = new TextField("Имя");
     private TextField patronymic = new TextField("Отчество");
     private EmailField email = new EmailField("Email адрес");
-    private DatePicker date = new DatePicker("Дата");
     private PhoneNumberField phone = new PhoneNumberField("Номер телефона");
 
 
@@ -44,7 +42,7 @@ public class ClientView extends Div {
         add(createTitle());
         add(createFormLayout());
         add(new Credit_Amount());
-        add(new credit_Term());
+        add(new creditTerm());
         add(createButtonLayout());
 
 
@@ -61,7 +59,7 @@ public class ClientView extends Div {
     private Component createFormLayout() {
         FormLayout formLayout = new FormLayout();
         email.setErrorMessage("Please enter a valid email address");
-        formLayout.add(surname, name, patronymic, date, phone, email);
+        formLayout.add(surname, name, patronymic, phone, email);
         return formLayout;
     }
 
@@ -135,13 +133,13 @@ public class ClientView extends Div {
         }
 
     }
-    @Route("клиент-view")
-    public class credit_Term extends Div {
+    @Route("creditTerm")
+    public class creditTerm extends Div {
 
         private final IntegerField integerField;
         public int creditMonth(){ return integerField.getValue();}
 
-        public credit_Term() {
+       public creditTerm() {
            integerField = new IntegerField();
             integerField.setLabel("Срок кредитования");
             integerField.setMin(13);

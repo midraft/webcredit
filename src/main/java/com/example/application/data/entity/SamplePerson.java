@@ -40,12 +40,8 @@ public class SamplePerson extends AbstractEntity {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-    public LocalDate getDate() {
-        return date;
-    }
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
+    public LocalDate getDate() { return date; }
+    public void setDate(LocalDate date) { this.date = date; }
     public String getPatronymic() {
         return patronymic;
     }

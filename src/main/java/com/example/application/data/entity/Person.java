@@ -1,8 +1,8 @@
 package com.example.application.data.entity;
 
-import javax.persistence.Entity;
-
 import com.example.application.data.AbstractEntity;
+
+import javax.persistence.Entity;
 import java.time.LocalDate;
 
 @Entity

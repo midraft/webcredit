@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="jdbc:hsqldb:mem:spring_web_clients" uuid="03549a46-96a4-4df0-85f3-b9966395c88c">
+    <data-source source="LOCAL" name="resources" uuid="8f4a2600-0bef-469b-9754-a6cd5fdad0dd">
       <driver-ref>hsqldb.local</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.hsqldb.jdbc.JDBCDriver</jdbc-driver>
-      <jdbc-url>jdbc:hsqldb:mem:spring_web_clients</jdbc-url>
-      <driver-properties>
-        <property name="shutdown" value="true" />
-        <property name="default_schema" value="true" />
-      </driver-properties>
+      <jdbc-url>jdbc:hsqldb:file:$PROJECT_DIR$/src/main/resources/database</jdbc-url>
     </data-source>
   </component>
 </project>
