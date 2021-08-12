@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
+import org.vaadin.artur.exampledata.ChanceStringType;
 import org.vaadin.artur.exampledata.DataType;
 import org.vaadin.artur.exampledata.ExampleDataGenerator;
 
@@ -33,9 +34,11 @@ public class DataGenerator {
             personRepositoryGenerator.setData(Person::setId, DataType.ID);
             personRepositoryGenerator.setData(Person::setSurname, DataType.LAST_NAME);
             personRepositoryGenerator.setData(Person::setName, DataType.FIRST_NAME);
+            personRepositoryGenerator.setData(Person::setPatronymic, new ChanceStringType("patronymic") );
             personRepositoryGenerator.setData(Person::setPatronymic, DataType.FULL_NAME);
             personRepositoryGenerator.setData(Person::setPhone, DataType.PHONE_NUMBER);
             personRepositoryGenerator.setData(Person::setEmail, DataType.EMAIL);
+            //personRepositoryGenerator.setData(Person::setPassportSeries, DataType.NUMBER_UP_TO_10000);
             personRepositoryGenerator.setData(Person::setPassportID, DataType.NUMBER_UP_TO_10000);
             personRepository.saveAll(personRepositoryGenerator.create(100, seed));
 

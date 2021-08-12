@@ -1,7 +1,6 @@
 package com.example.application.views.клиент;
 
 import com.example.application.data.entity.SamplePerson;
-import com.example.application.data.service.SamplePersonService;
 import com.example.application.views.main.MainView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
@@ -13,12 +12,13 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
-import com.vaadin.flow.component.textfield.IntegerField;
+import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
+import model.LoanCalculator;
 
 @Route(value = "home", layout = MainView.class)
 @RouteAlias(value = "", layout = MainView.class)
@@ -30,19 +30,30 @@ public class ClientView extends Div {
     private TextField patronymic = new TextField("Отчество");
     private EmailField email = new EmailField("Email адрес");
     private PhoneNumberField phone = new PhoneNumberField("Номер телефона");
-
+    //private TextField PassportID = new passportID ("Номер паспорта");
+    // TextField PassportSeries = new passportSeries ("Номер паспорта");
 
     private Button save = new Button("Оформить заявку");
+    private Credit_Amount credit_amount = new Credit_Amount();
+    private Credit_Term credit_term = new  Credit_Term();
+
+    public Button getSave() {
+        save.addClickListener(x ->{ LoanCalculator LoanCalculator = new LoanCalculator();
+            LoanCalculator.LoanCalculator(credit_amount,credit_term,10);
+        });
+        return save;
+    }
+
 
     private Binder<SamplePerson> binder = new Binder(SamplePerson.class);
 
-    public ClientView(SamplePersonService personService) {
+    public ClientView() {
         addClassName("клиент-view");
 
         add(createTitle());
         add(createFormLayout());
-        add(new Credit_Amount());
-        add(new creditTerm());
+        add(credit_amount);
+        add(credit_term);
         add(createButtonLayout());
 
 
@@ -64,10 +75,12 @@ public class ClientView extends Div {
     }
 
     private Component createButtonLayout() {
+        Button saveButton = getSave();
         HorizontalLayout buttonLayout = new HorizontalLayout();
         buttonLayout.addClassName("button-layout");
-        save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        buttonLayout.add(save);
+        saveButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+
+        buttonLayout.add(saveButton);
         return buttonLayout;
     }
 
@@ -117,37 +130,37 @@ public class ClientView extends Div {
     @Route("Credit_Amount")
     public class Credit_Amount extends Div {
 
-        private final IntegerField integerField;
-        public int credit_Amount(){ return integerField.getValue();}
+        private final NumberField numberField  ;
+        public Double credit_Amount(){ return numberField.getValue();}
 
         public Credit_Amount() {
-           integerField = new IntegerField();
-            integerField.setLabel("Сумма кредита");
-            integerField.setHelperText("от 100 000 ₽     до 5 000 000 ₽");
-            integerField.setMin(100000);
-            integerField.setMax(5000000);
-            integerField.setValue(100000);
-            integerField.setStep(100000);
-            integerField.setHasControls(true);
-            add(integerField);
+            numberField  = new NumberField ();
+            numberField.setLabel("Сумма кредита");
+            numberField.setHelperText("от 100 000 ₽     до 5 000 000 ₽");
+            numberField.setMin(100000);
+            numberField.setMax(5000000);
+            numberField.setValue(100000.0);
+            numberField.setStep(100000);
+            numberField.setHasControls(true);
+            add(numberField);
         }
 
     }
     @Route("creditTerm")
-    public class creditTerm extends Div {
+    public class Credit_Term extends Div {
 
-        private final IntegerField integerField;
-        public int creditMonth(){ return integerField.getValue();}
+        private final NumberField numberField;
+        public Double credit_Term(){ return numberField.getValue();}
 
-       public creditTerm() {
-           integerField = new IntegerField();
-            integerField.setLabel("Срок кредитования");
-            integerField.setMin(13);
-            integerField.setMax(84);
-            integerField.setValue(13);
-            integerField.setStep(1);
-            integerField.setHasControls(true);
-            add(integerField);
+       public Credit_Term() {
+           numberField = new NumberField();
+           numberField.setLabel("Срок кредитования");
+           numberField.setMin(13);
+           numberField.setMax(84);
+           numberField.setValue(13.0);
+           numberField.setStep(1);
+           numberField.setHasControls(true);
+            add(numberField);
         }
 
     }

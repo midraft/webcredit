@@ -15,6 +15,7 @@ public class Person extends AbstractEntity {
     private String email;
     private LocalDate date;
     private Integer passportID;
+    private Integer passportSeries;
 
     public String getSurname() {
         return surname;
@@ -57,6 +58,12 @@ public class Person extends AbstractEntity {
     }
     public void setPassportID(Integer passportID) {
         this.passportID = passportID;
+    }
+    public Integer getPassportSeries() {
+        return passportSeries;
+    }
+    public void setPassportSeries(Integer passportSeries) {
+        this.passportSeries = passportSeries;
     }
 
 }

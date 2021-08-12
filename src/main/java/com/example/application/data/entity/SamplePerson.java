@@ -15,6 +15,8 @@ public class SamplePerson extends AbstractEntity {
     private LocalDate date;
     private String patronymic;
     private boolean important;
+    private Integer PassportSeries;
+    private Integer PassportID;
 
     public String getName() {
         return name;
@@ -53,6 +55,18 @@ public class SamplePerson extends AbstractEntity {
     }
     public void setImportant(boolean important) {
         this.important = important;
+    }
+    public Integer getPassportSeries() {
+        return PassportSeries;
+    }
+    public void setPassportSeries(Integer PassportSeries) {
+        this.PassportSeries = PassportSeries;
+    }
+    public Integer getPassportID() {
+        return PassportID;
+    }
+    public void setPassportID(Integer PassportID) {
+        this.PassportID = PassportID;
     }
 
 }

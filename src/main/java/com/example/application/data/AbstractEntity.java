@@ -1,11 +1,37 @@
 package com.example.application.data;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
+import java.util.UUID;
 
 @MappedSuperclass
 public abstract class AbstractEntity {
+
+    @Entity
+    @Table(name = "customers")
+    public class Customer {
+
+        @Id
+        @GeneratedValue(strategy = GenerationType.AUTO)
+
+        private UUID CLIENTID;
+
+        private String SURNAME;
+
+        private String NAME;
+
+        private String PATRONYMIC;
+
+        private String PHONE;
+
+        private String EMAIL;
+
+        private String PASSPORTSERIES;
+
+        private String PASSPORTID;
+
+
+        // standard constructors / setters / getters / toString
+    }
 
     @Id
     @GeneratedValue

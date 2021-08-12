@@ -1,8 +1,7 @@
 .client-view {
   display: block;
-  margin: 0 auto;
-  max-width: 1920px;
-  padding: 0 var(--lumo-space-l);
+  width: var(--lumo-size-xl);
+  height: var(--lumo-size-xl);
 
 }
 .client-view .button-layout {
