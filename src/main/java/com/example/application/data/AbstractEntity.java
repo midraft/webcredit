@@ -14,19 +14,12 @@ public abstract class AbstractEntity {
         @GeneratedValue(strategy = GenerationType.AUTO)
 
         private UUID CLIENTID;
-
         private String SURNAME;
-
         private String NAME;
-
         private String PATRONYMIC;
-
         private String PHONE;
-
         private String EMAIL;
-
         private String PASSPORTSERIES;
-
         private String PASSPORTID;
 
 
@@ -65,4 +58,5 @@ public abstract class AbstractEntity {
         }
         return super.equals(other);
     }
+
 }

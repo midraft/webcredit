@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="user">
+
+    <!-- id:statementId
+          resultType: тип данных набора результатов запроса
+          parameterType: входной параметр запроса
+    -->
+    <select id="getClientById" parameterType="UUID" resultType="mybatis.pojo.Client" >
+        <! - # {}: точечный символ, эквивалент jdbc? ->
+        SELECT * FROM USER WHERE UUID = #{UUID1}
+    </select>
+
+    <! - resultType: Если вы хотите вернуть набор данных, просто установите тип данных для каждого элемента ->
+    <select id="getUserByName" parameterType="string" resultType="mybatis.pojo.User">
+        <!--
+             Метод 1: ВЫБЕРИТЕ * ОТ ПОЛЬЗОВАТЕЛЯ, ГДЕ имя пользователя LIKE # {name}
+             Метод второй: $ {value}: инструкция склейки строк, если входной параметр является общим типом данных {}, внутри может быть записано только значение, без добавления %% к коду, как показано ниже.
+         -->
+        SELECT * FROM USER WHERE username LIKE '%${value}%'
+    </select>
+
+    <! - Путь первый
+    useGeneratedKeys: при вставке идентификатора используется самоинкрементирующийся идентификатор
+    keyProperty: используется с useGeneratedKeys для привязки свойств pojo, полученных первичным ключом
+    <insert id="insertUser" parameterType="mybatis.pojo.User" useGeneratedKeys="true" keyProperty="id">
+    -->
+    <! - Метод второй ->
+    <insert id="insertUser" parameterType="mybatis.pojo.User">
+        <! - selectKey: используется для настройки первичного ключа
+        keyProperty: свойство Pojo для привязки
+        resultType: тип данных атрибута
+        порядок: укажите, когда выполнять, после ПОСЛЕ
+        -->
+        <selectKey keyProperty="id" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+
+        INSERT INTO USER
+        (`username`,
+        `birthday`,
+        `sex`,
+        `address`)
+        VALUES (#{username},
+        #{birthday},
+        #{sex},
+        #{address});
+    </insert>
+
+    <update id="updateUser" parameterType="mybatis.pojo.User">
+		UPDATE USER SET username = #{username} WHERE id = #{id}
+	</update>
+
+    <delete id="deleteUser" parameterType="int">
+		DELETE FROM `user` WHERE `id` = #{id1}
+	</delete>
+
+</mapper>

@@ -39,7 +39,7 @@ public class DataGenerator {
             personRepositoryGenerator.setData(Person::setPhone, DataType.PHONE_NUMBER);
             personRepositoryGenerator.setData(Person::setEmail, DataType.EMAIL);
             //personRepositoryGenerator.setData(Person::setPassportSeries, DataType.NUMBER_UP_TO_10000);
-            personRepositoryGenerator.setData(Person::setPassportID, DataType.NUMBER_UP_TO_10000);
+            //personRepositoryGenerator.setData(Person::setPassportID, DataType.NUMBER_UP_TO_10000);
             personRepository.saveAll(personRepositoryGenerator.create(100, seed));
 
             logger.info("Generated demo data");

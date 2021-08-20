@@ -14,12 +14,11 @@ public class dataSource {
         ResultSet result = null ;
 
         try {
-            Class.forName("org.hsqldb.jdbc.JDBCDriver");
             con = DriverManager.getConnection(
                     "jdbc:hsqldb:file:C:/Users/Double Brain/Desktop/webcredit/src/main/resources/database.tmp/clientDB", "SA", "");
             stmt = con.createStatement();
             result = stmt.executeQuery(
-                    "SELECT CLIENTID, SURNAME, NAME, PATRONYMIC, PHONE, EMAIL, PASSPORTSERIES, PASSPORTID from CLIENT");
+                    "SELECT * from CLIENT");
 
             while(result.next()){
                 System.out.println(result.getString("SURNAME")+" | "
@@ -31,4 +30,5 @@ public class dataSource {
             e.printStackTrace(System.out);
         }
     }
+
 }

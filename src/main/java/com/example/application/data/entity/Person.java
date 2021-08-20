@@ -3,7 +3,6 @@ package com.example.application.data.entity;
 import com.example.application.data.AbstractEntity;
 
 import javax.persistence.Entity;
-import java.time.LocalDate;
 
 @Entity
 public class Person extends AbstractEntity {
@@ -13,9 +12,12 @@ public class Person extends AbstractEntity {
     private String patronymic;
     private String phone;
     private String email;
-    private LocalDate date;
-    private Integer passportID;
-    private Integer passportSeries;
+    private String passportSeries;
+    private String passportID;
+    private String creditAmount;
+    private String creditTerm;
+    private String entryInterestRate;
+
 
     public String getSurname() {
         return surname;
@@ -47,23 +49,34 @@ public class Person extends AbstractEntity {
     public void setEmail(String email) {
         this.email = email;
     }
-    public LocalDate getDate() {
-        return date;
-    }
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-    public Integer getPassportID() {
-        return passportID;
-    }
-    public void setPassportID(Integer passportID) {
-        this.passportID = passportID;
-    }
-    public Integer getPassportSeries() {
+    public String getPassportSeries() {
         return passportSeries;
     }
-    public void setPassportSeries(Integer passportSeries) {
+    public void setPassportSeries(String passportSeries) {
         this.passportSeries = passportSeries;
     }
-
+    public String getPassportID() {
+        return passportID;
+    }
+    public void setPassportID(String passportID) {
+        this.passportID = passportID;
+    }
+    public String getCreditAmount() {
+        return creditAmount;
+    }
+    public void setCreditAmount(String creditAmount) {
+        this.creditAmount = creditAmount;
+    }
+    public String getCreditTerm() {
+        return creditTerm;
+    }
+    public void setCreditTerm(String creditTerm) {
+        this.creditTerm = creditTerm;
+    }
+    public String getEntryInterestRate() {
+        return entryInterestRate;
+    }
+    public void setEntryInterestRate(String entryInterestRate) {
+        this.entryInterestRate = entryInterestRate;
+    }
 }

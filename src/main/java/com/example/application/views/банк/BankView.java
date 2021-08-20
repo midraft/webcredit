@@ -2,40 +2,38 @@ package com.example.application.views.банк;
 
 
 import com.example.application.data.entity.Person;
-import com.example.application.data.service.PersonService;
 import com.example.application.views.main.MainView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.datepicker.DatePicker;
+import com.vaadin.flow.component.crud.BinderCrudEditor;
+import com.vaadin.flow.component.crud.Crud;
+import com.vaadin.flow.component.crud.CrudEditor;
+import com.vaadin.flow.component.crud.CrudVariant;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
+import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
-import com.vaadin.flow.data.converter.StringToIntegerConverter;
-import com.vaadin.flow.router.BeforeEnterEvent;
-import com.vaadin.flow.router.BeforeEnterObserver;
+import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.vaadin.artur.helpers.CrudServiceDataProvider;
-
-import java.util.Optional;
+import controllers.ClientDataProvider;
+import model.Client;
 
 @Route(value = "bank/:personID?/:action?(edit)", layout = MainView.class)
 @PageTitle("Банк")
-public class BankView extends Div implements BeforeEnterObserver {
+public class BankView extends Div {
 
     private final String PERSON_ID = "personID";
-    private final String PERSON_EDIT_ROUTE_TEMPLATE = "bank/%d/edit";
+    private final String CLIENT_EDIT_ROUTE_TEMPLATE = "bank/%d/edit";
 
     private Grid<Person> grid = new Grid<>(Person.class, false);
 
@@ -44,61 +42,53 @@ public class BankView extends Div implements BeforeEnterObserver {
     private TextField patronymic;
     private TextField phone;
     private TextField email;
-    private DatePicker date;
+    private TextField passportSeries;
     private TextField passportID;
+    private TextField creditAmount;
+    private TextField creditTerm;
+    private TextField entryInterestRate;
+
 
     private Button cancel = new Button("Отменить");
     private Button save = new Button("Сохранить");
+    private Button delete = new Button("Удалить");
 
 
-    private BeanValidationBinder<Person> binder;
 
-    private Person person;
+    private BeanValidationBinder<Client> binder;
 
-    private PersonService personService;
+    private Client client;
 
-    public BankView(@Autowired PersonService personService) {
+
+
+
+    public BankView() {
         addClassNames("банк-view", "flex", "flex-col", "h-full");
-        this.personService = personService;
-        // Create UI
-        SplitLayout splitLayout = new SplitLayout();
-        splitLayout.setSizeFull();
 
-        createGridLayout(splitLayout);
-        createEditorLayout(splitLayout);
+        Crud<Client> crud = new Crud<>(Client.class, createClientEditor());
 
-        add(splitLayout);
+        ClientDataProvider clientDataProvider = new ClientDataProvider();
 
-        // Configure Grid
-        grid.addColumn("surname").setAutoWidth(true);
-        grid.addColumn("name").setAutoWidth(true);
-        grid.addColumn("patronymic").setAutoWidth(true);
-        grid.addColumn("phone").setAutoWidth(true);
-        grid.addColumn("email").setAutoWidth(true);
-        grid.addColumn("date").setAutoWidth(true);
-        grid.addColumn("passportID").setAutoWidth(true);
-        grid.setDataProvider(new CrudServiceDataProvider<>(personService));
-        grid.addThemeVariants(GridVariant.LUMO_NO_BORDER);
-        grid.setHeightFull();
+        crud.setDataProvider(clientDataProvider);
+        crud.addSaveListener(e -> ClientDataProvider.persist(e.getItem()));
+        crud.addDeleteListener(e -> ClientdataProvider.delete(e.getItem()));
+
+        crud.getGrid().removeColumnByKey("id");
+        crud.addThemeVariants(CrudVariant.NO_BORDER);
+        add(crud);
+
+
 
         // when a row is selected or deselected, populate form
         grid.asSingleSelect().addValueChangeListener(event -> {
             if (event.getValue() != null) {
-                UI.getCurrent().navigate(String.format(PERSON_EDIT_ROUTE_TEMPLATE, event.getValue().getId()));
+                UI.getCurrent().navigate(String.format(CLIENT_EDIT_ROUTE_TEMPLATE, event.getValue().getId()));
             } else {
                 clearForm();
                 UI.getCurrent().navigate(BankView.class);
             }
         });
 
-        // Configure Form
-        binder = new BeanValidationBinder<>(Person.class);
-
-        // Bind fields. This where you'd define e.g. validation rules
-        binder.forField(passportID).withConverter(new StringToIntegerConverter("Only numbers are allowed"))
-                .bind("passportID");
-
-        binder.bindInstanceFields(this);
 
         cancel.addClickListener(e -> {
             clearForm();
@@ -107,40 +97,52 @@ public class BankView extends Div implements BeforeEnterObserver {
 
         save.addClickListener(e -> {
             try {
-                if (this.person == null) {
-                    this.person = new Person();
+                if (this.client == null) {
+                    this.client = new Client();
                 }
-                binder.writeBean(this.person);
+                binder.writeBean(this.client);
 
-                personService.update(this.person);
+
                 clearForm();
                 refreshGrid();
-                Notification.show("Person details stored.");
+                Notification.show("Client details stored.");
                 UI.getCurrent().navigate(BankView.class);
             } catch (ValidationException validationException) {
-                Notification.show("An exception happened while trying to store the person details.");
+                Notification.show("An exception happened while trying to store the client details.");
             }
         });
 
+
+    }
+    private CrudEditor<Client> createClientEditor() {
+        TextField surname = new TextField("Фамилия");
+        TextField name = new TextField("Имя");
+        TextField patronymic = new TextField("Отчество");
+        TextField phone = new TextField("Номер телефона");
+        TextField email = new TextField("Почта");
+        TextField passportSeries = new TextField("Серия паспорта");
+        TextField passportID = new TextField("Номер паспорта");
+        Integer creditAmount = new Integer("Сумма кредита");
+        Integer creditTerm = new Integer("Срок кредитования");
+        Double entryInterestRate = new Double("Процентная ставка");
+
+        FormLayout form = new FormLayout(name, surname, patronymic, phone, email, passportSeries, passportID, creditAmount, creditTerm, entryInterestRate);
+
+        Binder<Client> binder = new Binder<>(Client.class);
+        binder.bind(surname, Client::getSURNAME, Client::setSURNAME);
+        binder.bind(name, Client::getNAME, Client::setNAME);
+        binder.bind(patronymic, Client::getPATRONYMIC, Client::setPATRONYMIC);
+        binder.bind(phone, Client::getPHONE, Client::setPHONE);
+        binder.bind(email, Client::getEMAIL, Client::setEMAIL);
+        binder.bind(passportSeries, Client::getPASSPORTSERIES, Client::setPASSPORTSERIES);
+        binder.bind(passportID, Client::getPASSPORTID, Client::setPASSPORTID);
+        binder.bind(creditAmount, Client::getCREDIT_AMOUNT, Client::setCREDIT_AMOUNT);
+        binder.bind(creditTerm, Client::getCREDIT_TERM, Client::setCREDIT_TERM);
+        binder.bind(entryInterestRate, Client::getENTRY_INTEREST_RATE, Client::setENTRY_INTEREST_RATE);
+
+        return new BinderCrudEditor<>(binder, form);
     }
 
-    @Override
-    public void beforeEnter(BeforeEnterEvent event) {
-        Optional<Integer> personId = event.getRouteParameters().getInteger(PERSON_ID);
-        if (personId.isPresent()) {
-            Optional<Person> personFromBackend = personService.get(personId.get());
-            if (personFromBackend.isPresent()) {
-                populateForm(personFromBackend.get());
-            } else {
-                Notification.show(String.format("The requested person was not found, ID = %d", personId.get()), 3000,
-                        Notification.Position.BOTTOM_START);
-                // when a row is selected but the data is no longer available,
-                // refresh grid
-                refreshGrid();
-                event.forwardTo(BankView.class);
-            }
-        }
-    }
 
     private void createEditorLayout(SplitLayout splitLayout) {
         Div editorLayoutDiv = new Div();
@@ -152,14 +154,18 @@ public class BankView extends Div implements BeforeEnterObserver {
         editorLayoutDiv.add(editorDiv);
 
         FormLayout formLayout = new FormLayout();
-        surname = new TextField("Surname");
-        name = new TextField("Name");
-        patronymic = new TextField("Patronymic");
-        phone = new TextField("Phone");
-        email = new TextField("Email");
-        date = new DatePicker("Date");
-        passportID = new TextField("Passport ID");
-        Component[] fields = new Component[]{surname, name, patronymic, phone, email, date, passportID};
+        surname = new TextField("Фамилия");
+        name = new TextField("Имя");
+        patronymic = new TextField("Отчество");
+        phone = new TextField("Номер телефона");
+        email = new TextField("Почта");
+        passportSeries = new TextField("Серия паспорта");
+        passportID = new TextField("Номер паспорта");
+        creditAmount = new TextField("Сумма кредита");
+        creditTerm = new TextField("Срок кредитования");
+        entryInterestRate = new TextField("Процентная ставка");
+
+        Component[] fields = new Component[]{surname, name, patronymic, phone, email, passportSeries, passportID, creditAmount, creditTerm, entryInterestRate};
 
         for (Component field : fields) {
             ((HasStyle) field).addClassName("full-width");
@@ -177,7 +183,8 @@ public class BankView extends Div implements BeforeEnterObserver {
         buttonLayout.setSpacing(true);
         cancel.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        buttonLayout.add(save, cancel);
+        delete.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        buttonLayout.add(save, cancel, delete);
         editorLayoutDiv.add(buttonLayout);
     }
 
@@ -198,9 +205,9 @@ public class BankView extends Div implements BeforeEnterObserver {
         populateForm(null);
     }
 
-    private void populateForm(Person value) {
-        this.person = value;
-        binder.readBean(this.person);
+    private void populateForm(Client value) {
+        this.client = value;
+        binder.readBean(this.client);
 
     }
 }

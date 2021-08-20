@@ -34,12 +34,12 @@ public class ClientView extends Div {
     // TextField PassportSeries = new passportSeries ("Номер паспорта");
 
     private Button save = new Button("Оформить заявку");
-    private Credit_Amount credit_amount = new Credit_Amount();
-    private Credit_Term credit_term = new  Credit_Term();
+    private CreditAmount creditAmount = new CreditAmount();
+    private CreditTerm creditTerm = new  CreditTerm();
 
     public Button getSave() {
         save.addClickListener(x ->{ LoanCalculator LoanCalculator = new LoanCalculator();
-            LoanCalculator.LoanCalculator(credit_amount,credit_term,10);
+            LoanCalculator.loanCalculator(creditAmount,creditTerm,10);
         });
         return save;
     }
@@ -52,8 +52,8 @@ public class ClientView extends Div {
 
         add(createTitle());
         add(createFormLayout());
-        add(credit_amount);
-        add(credit_term);
+        add(creditAmount);
+        add(creditTerm);
         add(createButtonLayout());
 
 
@@ -76,7 +76,8 @@ public class ClientView extends Div {
 
     private Component createButtonLayout() {
         Button saveButton = getSave();
-        HorizontalLayout buttonLayout = new HorizontalLayout();
+        HorizontalLayout buttonLayout = new HorizontalLayout(creditAmount,creditTerm);
+        buttonLayout.setWidth("150px");
         buttonLayout.addClassName("button-layout");
         saveButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
@@ -128,12 +129,12 @@ public class ClientView extends Div {
         }
     }
     @Route("Credit_Amount")
-    public class Credit_Amount extends Div {
+    public class CreditAmount extends Div {
 
         private final NumberField numberField  ;
-        public Double credit_Amount(){ return numberField.getValue();}
+        public Double creditAmount(){ return numberField.getValue();}
 
-        public Credit_Amount() {
+        public CreditAmount() {
             numberField  = new NumberField ();
             numberField.setLabel("Сумма кредита");
             numberField.setHelperText("от 100 000 ₽     до 5 000 000 ₽");
@@ -147,12 +148,12 @@ public class ClientView extends Div {
 
     }
     @Route("creditTerm")
-    public class Credit_Term extends Div {
+    public class CreditTerm extends Div {
 
         private final NumberField numberField;
-        public Double credit_Term(){ return numberField.getValue();}
+        public Double creditTerm(){ return numberField.getValue();}
 
-       public Credit_Term() {
+       public CreditTerm() {
            numberField = new NumberField();
            numberField.setLabel("Срок кредитования");
            numberField.setMin(13);
