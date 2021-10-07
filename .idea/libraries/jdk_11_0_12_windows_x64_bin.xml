@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jdk-11.0.12_windows-x64_bin">
+    <CLASSES>
+      <root url="file://$USER_HOME$/Downloads/jdk-11.0.12_windows-x64_bin.exe" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping >
+
+
+    <class name= "com.example.application.model.PaymentSchedule" table="PAYMENTSCHEDULE">
+        <id name="paymentId" column="paymentId"/>
+        <property name="number" column="number"/>
+        <property name="date" column="date"/>
+        <property name="monthlyPaymentFormat" column="monthlyPaymentFormat"/>
+        <property name="percentFormat" column="percentFormat"/>
+        <property name="mainDebtFormat" column="mainDebtFormat"/>
+        <property name="remainder" column="remainder"/>
+        <property name="personId" column="personId"/>
+    </class>
+
+</hibernate-mapping>

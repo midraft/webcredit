@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+
+    <class name= "com.example.application.model.Clients" table="CLIENTS">
+        <id name="CLIENTID" column="CLIENTID"/>
+        <property name="SURNAME" column="SURNAME"/>
+        <property name="NAME" column="NAME"/>
+        <property name="PATRONYMIC" column="PATRONYMIC"/>
+        <property name="PHONE" column="PHONE"/>
+        <property name="EMAIL" column="EMAIL"/>
+        <property name="PASSPORTSERIES" column="PASSPORTSERIES"/>
+        <property name="PASSPORTID" column="PASSPORTID"/>
+        <property name="CREDIT_AMOUNT" column="CREDIT_AMOUNT"/>
+        <property name="CREDIT_TERM" column="CREDIT_TERM"/>
+        <property name="ENTRY_INTEREST_RATE" column="ENTRY_INTEREST_RATE"/>
+    </class>
+
+</hibernate-mapping>
