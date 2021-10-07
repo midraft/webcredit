@@ -1,6 +1,5 @@
 package com.example.application.views.клиент;
 
-import com.example.application.data.entity.SamplePerson;
 import com.example.application.views.main.MainView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
@@ -12,30 +11,30 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
+import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
-import model.LoanCalculator;
+import com.example.application.model.LoanCalculator;
 
 @Route(value = "home", layout = MainView.class)
 @RouteAlias(value = "", layout = MainView.class)
 @PageTitle("Клиент")
 public class ClientView extends Div {
 
-    private TextField surname = new TextField("Фамилия");
-    private TextField name = new TextField("Имя");
-    private TextField patronymic = new TextField("Отчество");
-    private EmailField email = new EmailField("Email адрес");
-    private PhoneNumberField phone = new PhoneNumberField("Номер телефона");
-    //private TextField PassportID = new passportID ("Номер паспорта");
-    // TextField PassportSeries = new passportSeries ("Номер паспорта");
+    private final TextField surname = new TextField("Фамилия");
+    private final TextField name = new TextField("Имя");
+    private final TextField patronymic = new TextField("Отчество");
+    private final PhoneNumberField phone = new PhoneNumberField("Номер телефона");
+    private final EmailField email = new EmailField("адрес электронной почты ");
+    private final IntegerField passportSeries = new IntegerField ("Серия паспорта");
+    private final IntegerField passportID = new IntegerField ("Номер паспорта");
+    private final CreditAmount creditAmount = new CreditAmount();
+    private final CreditTerm creditTerm = new CreditTerm();
 
-    private Button save = new Button("Оформить заявку");
-    private CreditAmount creditAmount = new CreditAmount();
-    private CreditTerm creditTerm = new  CreditTerm();
+    private final Button save = new Button("Оформить заявку");
 
     public Button getSave() {
         save.addClickListener(x ->{ LoanCalculator LoanCalculator = new LoanCalculator();
@@ -44,8 +43,7 @@ public class ClientView extends Div {
         return save;
     }
 
-
-    private Binder<SamplePerson> binder = new Binder(SamplePerson.class);
+    
 
     public ClientView() {
         addClassName("клиент-view");
@@ -58,10 +56,7 @@ public class ClientView extends Div {
 
 
     }
-
-    private void clearForm() {
-        binder.setBean(new SamplePerson());
-    }
+    
 
     private Component createTitle() {
         return new H3("Данные клиента");
@@ -70,7 +65,7 @@ public class ClientView extends Div {
     private Component createFormLayout() {
         FormLayout formLayout = new FormLayout();
         email.setErrorMessage("Please enter a valid email address");
-        formLayout.add(surname, name, patronymic, phone, email);
+        formLayout.add(surname, name, patronymic, phone, email, passportSeries, passportID);
         return formLayout;
     }
 
@@ -86,8 +81,8 @@ public class ClientView extends Div {
     }
 
     private static class PhoneNumberField extends CustomField<String> {
-        private ComboBox<String> countryCode = new ComboBox<>();
-        private TextField number = new TextField();
+        private final ComboBox<String> countryCode = new ComboBox<>();
+        private final TextField number = new TextField();
 
         public PhoneNumberField(String label) {
             setLabel(label);
@@ -129,7 +124,7 @@ public class ClientView extends Div {
         }
     }
     @Route("Credit_Amount")
-    public class CreditAmount extends Div {
+    public static class CreditAmount extends Div {
 
         private final NumberField numberField  ;
         public Double creditAmount(){ return numberField.getValue();}
@@ -148,7 +143,7 @@ public class ClientView extends Div {
 
     }
     @Route("creditTerm")
-    public class CreditTerm extends Div {
+    public static class CreditTerm extends Div {
 
         private final NumberField numberField;
         public Double creditTerm(){ return numberField.getValue();}
