@@ -12,12 +12,12 @@
         <property name="NAME" column="NAME"/>
         <property name="PATRONYMIC" column="PATRONYMIC"/>
         <property name="PHONE" column="PHONE"/>
-        <property name="EMAIL" column="EMAIL"/>
+        <property name="email" column="EMAIL"/>
         <property name="PASSPORTSERIES" column="PASSPORTSERIES"/>
         <property name="PASSPORTID" column="PASSPORTID"/>
-        <property name="CREDIT_AMOUNT" column="CREDIT_AMOUNT"/>
-        <property name="CREDIT_TERM" column="CREDIT_TERM"/>
-        <property name="ENTRY_INTEREST_RATE" column="ENTRY_INTEREST_RATE"/>
+        <property name="creditAmount" column="credit_amount"/>
+        <property name="creditTerm" column="credit_term"/>
+        <property name="entryInterestRate" column="entry_interest_rate"/>
     </class>
 
 </hibernate-mapping>

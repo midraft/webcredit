@@ -1,8 +1,9 @@
 package com.example.application.model;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
+
 
 /**
  * Модель данных для взаимодействия приложение с базой данных.
@@ -13,54 +14,78 @@ import java.util.UUID;
 
 public class Clients {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID CLIENTID = UUID.randomUUID();
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "CLIENTID", updatable = false, nullable = false, unique=true)
+    private UUID CLIENTID;
 
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Collection<PaymentSchedule> paymentSchedule;
-
-
+    @Column(name = "SURNAME")
     private String SURNAME;
+
+    @Column(name = "NAME")
     private String NAME;
+
+    @Column(name = "PATRONYMIC")
     private String PATRONYMIC;
+
+    @Column(name = "PHONE")
     private String PHONE;
-    private String EMAIL;
+
+    @Column(name = "PASSPORTSERIES")
     private int PASSPORTSERIES;
+
+    @Column(name = "PASSPORTID")
     private int PASSPORTID;
-    private double CREDIT_AMOUNT;
-    private double CREDIT_TERM;
-    private double ENTRY_INTEREST_RATE;
+
+    @Column(name = "credit_amount")
+    private Double creditAmount;
+
+    @Column(name = "credit_term")
+    private Double creditTerm;
+
+    @Column(name = "entry_interest_rate")
+    private Double entryInterestRate;
+
+    @Column(name = "email")
+    private String email;
 
 
+    @OneToMany(mappedBy = "clients", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PaymentSchedule> paymentSchedules;
 
-    
-    
-    
-    public Clients(UUID CLIENTID, String SURNAME, String NAME, String PATRONYMIC, String PHONE, String EMAIL, int PASSPORTSERIES, int PASSPORTID, double CREDIT_AMOUNT, double CREDIT_TERM,double ENTRY_INTEREST_RATE ) {
+    public void setCLIENTID(UUID CLIENTID) {
         this.CLIENTID = CLIENTID;
-        this.SURNAME = SURNAME;
-        this.PATRONYMIC = PATRONYMIC;
-        this.NAME = NAME;
-        this.PHONE = PHONE;
-        this.EMAIL = EMAIL;
-        this.PASSPORTSERIES = PASSPORTSERIES;
-        this.PASSPORTID = PASSPORTID;
-        this.CREDIT_AMOUNT = CREDIT_AMOUNT;
-        this.CREDIT_TERM = CREDIT_TERM;
-        this.ENTRY_INTEREST_RATE = ENTRY_INTEREST_RATE;
-    }
-
-    public Clients() {
-
     }
 
     public UUID getCLIENTID() {
         return CLIENTID;
     }
 
-    public void setCLIENTID(UUID CLIENTID) {
+
+    public List<PaymentSchedule> getPaymentSchedules() {
+        return paymentSchedules;
+    }
+
+    public void setPaymentSchedules(List<PaymentSchedule> paymentSchedules) {
+        this.paymentSchedules = paymentSchedules;
+    }
+
+    public Clients(UUID CLIENTID, String SURNAME, String NAME, String PATRONYMIC, String PHONE, String email, int PASSPORTSERIES, int PASSPORTID, double creditAmount, double creditTerm, double entryInterestRate ) {
         this.CLIENTID = CLIENTID;
+        this.SURNAME = SURNAME;
+        this.PATRONYMIC = PATRONYMIC;
+        this.NAME = NAME;
+        this.PHONE = PHONE;
+        this.email = email;
+        this.PASSPORTSERIES = PASSPORTSERIES;
+        this.PASSPORTID = PASSPORTID;
+        this.creditAmount = creditAmount;
+        this.creditTerm = creditTerm;
+        this.entryInterestRate = entryInterestRate;
+    }
+
+    public Clients() {
+
     }
 
     public String getSURNAME() {
@@ -95,14 +120,6 @@ public class Clients {
         this.PHONE = PHONE;
     }
 
-    public String getEMAIL() {
-        return EMAIL;
-    }
-
-    public void setEMAIL(String EMAIL) {
-        this.EMAIL = EMAIL;
-    }
-
     public int getPASSPORTSERIES() {
         return PASSPORTSERIES;
     }
@@ -119,28 +136,36 @@ public class Clients {
         this.PASSPORTID = PASSPORTID;
     }
 
-    public double getCREDIT_AMOUNT() {
-        return CREDIT_AMOUNT;
+    public Double getCreditAmount() {
+        return creditAmount;
     }
 
-    public void setCREDIT_AMOUNT(double CREDIT_AMOUNT) {
-        this.CREDIT_AMOUNT = CREDIT_AMOUNT;
+    public void setCreditAmount(Double creditAmount) {
+        this.creditAmount = creditAmount;
     }
 
-    public double getCREDIT_TERM() {
-        return CREDIT_TERM;
+    public Double getEntryInterestRate() {
+        return entryInterestRate;
     }
 
-    public void setCREDIT_TERM(double CREDIT_TERM) {
-        this.CREDIT_TERM = CREDIT_TERM;
+    public void setEntryInterestRate(Double entryIterestRate) {
+        this.entryInterestRate = entryIterestRate;
     }
 
-    public double getENTRY_INTEREST_RATE() {
-        return ENTRY_INTEREST_RATE;
+    public Double getCreditTerm() {
+        return creditTerm;
     }
 
-    public void setENTRY_INTEREST_RATE(double ENTRY_INTEREST_RATE) {
-        this.ENTRY_INTEREST_RATE = ENTRY_INTEREST_RATE;
+    public void setCreditTerm(Double creditTerm) {
+        this.creditTerm = creditTerm;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override

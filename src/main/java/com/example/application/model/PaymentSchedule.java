@@ -1,6 +1,9 @@
 package com.example.application.model;
 
+import org.hibernate.Hibernate;
+
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -11,27 +14,40 @@ import java.util.UUID;
 
 public class PaymentSchedule {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "paymentId", updatable = false, nullable = false, unique=true)
     private final UUID paymentId = UUID.randomUUID();
 
     @JoinColumn(name = "number")
     private int number;
     private String date;
-    private double monthlyPaymentFormat;
-    private double percentFormat;
-    private double mainDebtFormat;
-    private double remainder;
+    private Double monthlyPaymentFormat;
+    private Double percentFormat;
+    private Double mainDebtFormat;
+    private Double remainder;
     @Column(name = "personId",nullable=false)
     private UUID personId = UUID.randomUUID();
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "clients_clientid")
+    private Clients clients;
+
+    public PaymentSchedule() {
+
+    }
+
+    public Clients getClients() {
+        return clients;
+    }
+
+    public void setClients(Clients clients) {
+        this.clients = clients;
+    }
+
     /**
      * Внешний ключь для зависимости график платежей к клиенту
      */
-    @ManyToOne(optional=false)
-    @JoinColumn(name = "personId", insertable=false, updatable=false)
-    private Clients client;
 
-    public PaymentSchedule(){
-    }
 
     public PaymentSchedule(int number, String date, double monthlyPaymentFormat, double percentFormat, double mainDebtFormat, double remainder) {
         this.number = number;
@@ -62,35 +78,35 @@ public class PaymentSchedule {
         this.date = date;
     }
 
-    public double getMonthlyPaymentFormat() {
+    public Double getMonthlyPaymentFormat() {
         return monthlyPaymentFormat;
     }
 
-    public void setMonthlyPaymentFormat(double monthlyPaymentFormat) {
+    public void setMonthlyPaymentFormat(Double monthlyPaymentFormat) {
         this.monthlyPaymentFormat = monthlyPaymentFormat;
     }
 
-    public double getPercentFormat() {
+    public Double getPercentFormat() {
         return percentFormat;
     }
 
-    public void setPercentFormat(double percentFormat) {
+    public void setPercentFormat(Double percentFormat) {
         this.percentFormat = percentFormat;
     }
 
-    public double getMainDebtFormat() {
+    public Double getMainDebtFormat() {
         return mainDebtFormat;
     }
 
-    public void setMainDebtFormat(double mainDebtFormat) {
+    public void setMainDebtFormat(Double mainDebtFormat) {
         this.mainDebtFormat = mainDebtFormat;
     }
 
-    public double getRemainder() {
+    public Double getRemainder() {
         return remainder;
     }
 
-    public void setRemainder(double remainder) {
+    public void setRemainder(Double remainder) {
         this.remainder = remainder;
     }
 
@@ -123,5 +139,18 @@ public class PaymentSchedule {
         } catch (CloneNotSupportedException e) {
             return null;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        PaymentSchedule that = (PaymentSchedule) o;
+        return paymentId != null && Objects.equals(paymentId, that.paymentId);
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
     }
 }

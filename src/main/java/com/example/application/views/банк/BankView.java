@@ -61,12 +61,12 @@ public class BankView extends Div {
         binder.bind(name, Clients::getNAME, Clients::setNAME);
         binder.bind(patronymic, Clients::getPATRONYMIC, Clients::setPATRONYMIC);
         binder.bind(phone, Clients::getPHONE, Clients::setPHONE);
-        binder.bind(email, Clients::getEMAIL, Clients::setEMAIL);
+        binder.bind(email, Clients::getEmail, Clients::setEmail);
         binder.bind(passportSeries, Clients::getPASSPORTSERIES, Clients::setPASSPORTSERIES);
         binder.bind(passportID, Clients::getPASSPORTID, Clients::setPASSPORTID);
-        binder.bind(creditAmount, Clients::getCREDIT_AMOUNT, Clients::setCREDIT_AMOUNT);
-        binder.bind(creditTerm, Clients::getCREDIT_TERM, Clients::setCREDIT_TERM);
-        binder.bind(entryInterestRate, Clients::getENTRY_INTEREST_RATE, Clients::setENTRY_INTEREST_RATE);
+        binder.bind(creditAmount, Clients::getCreditAmount, Clients::setCreditAmount);
+        binder.bind(creditTerm, Clients::getCreditTerm, Clients::setCreditTerm);
+        binder.bind(entryInterestRate, Clients::getEntryInterestRate, Clients::setEntryInterestRate);
 
         return new BinderCrudEditor<>(binder, form);
     }
